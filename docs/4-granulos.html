@@ -387,6 +387,12 @@ div.tocify {
 <li>
   <a href="4-granulos.html">Granulos</a>
 </li>
+<li>
+  <a href="5-KCs.html">KCs</a>
+</li>
+<li>
+  <a href="6-BMDM.html">BMDM</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -523,16 +529,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontree541205fac1aca093ce96a31a9248bac5c0549f87targetblank541205fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/tessbrodie/PhX_revision/tree/541205fac1aca093ce96a31a9248bac5c0549f87" target="_blank">541205f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontreee1ee18b30bdea76eac0a88df7b7078f4b66c1b6etargetblanke1ee18ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/tessbrodie/PhX_revision/tree/e1ee18b30bdea76eac0a88df7b7078f4b66c1b6e" target="_blank">e1ee18b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontree541205fac1aca093ce96a31a9248bac5c0549f87targetblank541205fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontreee1ee18b30bdea76eac0a88df7b7078f4b66c1b6etargetblanke1ee18ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/tessbrodie/PhX_revision/tree/541205fac1aca093ce96a31a9248bac5c0549f87" target="_blank">541205f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/tessbrodie/PhX_revision/tree/e1ee18b30bdea76eac0a88df7b7078f4b66c1b6e" target="_blank">e1ee18b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -545,17 +551,20 @@ Ignored files:
     Ignored:    analysis/1-clustering_cache/
     Ignored:    analysis/2-dimred_cache/
     Ignored:    analysis/3-differential_cache/
+    Ignored:    analysis/5-KCs_cache/
+    Ignored:    analysis/6-BMDM_cache/
     Ignored:    analysis/site_libs/
     Ignored:    data/fcs/
 
 Untracked files:
     Untracked:  SA_plot.pdf
+    Untracked:  analysis/6-BMDM.Rmd
 
 Unstaged changes:
     Modified:   .gitignore
     Modified:   _workflowr.yml
+    Modified:   analysis/5-KCs.Rmd
     Modified:   analysis/_site.yml
-    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -599,6 +608,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/tessbrodie/PhX_revision/blob/2c5e5b9561de6c68de615a92f2938b705a4a9cb8/analysis/4-granulos.Rmd" target="_blank">2c5e5b9</a>
+</td>
+<td>
+Tess Brodie
+</td>
+<td>
+2020-11-04
+</td>
+<td>
+wflow_publish(c(“analysis/index.Rmd”, “analysis/0-preparation.Rmd”,
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tessbrodie/PhX_revision/088f03dcf30f8a02c8fefa6762a376a86b034b78/docs/4-granulos.html" target="_blank">088f03d</a>
+</td>
+<td>
+Tess Brodie
+</td>
+<td>
+2020-11-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/tessbrodie/PhX_revision/blob/541205fac1aca093ce96a31a9248bac5c0549f87/analysis/4-granulos.Rmd" target="_blank">541205f</a>
 </td>
 <td>
@@ -633,18 +676,19 @@ library(RColorBrewer)</code></pre>
 <h3>Load data</h3>
 <pre class="r"><code>sce &lt;- readRDS(file.path(&quot;output&quot;, &quot;sce.rds&quot;))</code></pre>
 </div>
-<div id="filter-on-granulocytes" class="section level3">
-<h3>Filter on Granulocytes</h3>
+</div>
+<div id="filter-on-granulocytes" class="section level1">
+<h1>Filter on Granulocytes</h1>
 <pre class="r"><code>sceG &lt;- filterSCE(sce, k = &quot;mm&quot;,
                cluster_id %in% &quot;Granulocytes&quot;)
 
 plot_grid(
   plotDR(sce, dr= &quot;TSNE&quot;, color_by = &quot;mm&quot;),
   plotDR(sceG, dr= &quot;TSNE&quot;, color_by = &quot;mm&quot;))</code></pre>
-<p><img src="figure/4-granulos.Rmd/Filter_BMDM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/4-granulos.Rmd/Filter_Granulos-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="target-expression-in-granulocytes-over-time" class="section level3">
-<h3>Target expression in Granulocytes over time</h3>
+<div id="target-expression-over-time" class="section level1">
+<h1>Target expression over time</h1>
 <pre class="r"><code>plotExprHeatmap(sceG,
     row_anno = FALSE,   # don&#39;t annotate samples
     row_clust = FALSE,  # keep samples in original order
@@ -654,33 +698,32 @@ plot_grid(
     scale = &quot;last&quot;)     # aggregate, then scale</code></pre>
 <p><img src="figure/4-granulos.Rmd/ExprHeatmap_granulos-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-<div id="number-of-granulocytes-per-sample" class="section level2">
-<h2>Number of Granulocytes per sample</h2>
+<div id="cells-per-sample" class="section level1">
+<h1>Cells per sample</h1>
 <pre class="r"><code>plotCounts(sceG, 
            group_by = &quot;sample_id&quot;, 
            color_by = &quot;condition&quot;)</code></pre>
 <p><img src="figure/4-granulos.Rmd/Granulo_count-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="tsne-of-granulocytes-colored-by-condition" class="section level2">
-<h2>TSNE of Granulocytes colored by condition</h2>
+<div id="tsne-by-condition" class="section level1">
+<h1>tSNE by condition</h1>
 <pre class="r"><code>sceG &lt;- runDR(sceG, dr = &quot;TSNE&quot;, features = NULL)
 plotDR(sceG, dr = &quot;TSNE&quot;, color_by = &quot;condition&quot;)</code></pre>
 <p><img src="figure/4-granulos.Rmd/TSNE_condition-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="facet-by-condition" class="section level2">
-<h2>Facet by condition</h2>
+<div id="faceted" class="section level2">
+<h2>Faceted</h2>
 <pre class="r"><code>plotDR(sceG, dr = &quot;TSNE&quot;, color_by = &quot;condition&quot;, facet_by = &quot;condition&quot;)</code></pre>
 <p><img src="figure/4-granulos.Rmd/TSNE_condition_facet-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="granulocyte-type-markers-tsne-facet" class="section level2">
-<h2>Granulocyte Type markers TSNE facet</h2>
+</div>
+<div id="heatmap-of-type-markers" class="section level1">
+<h1>Heatmap of Type markers</h1>
 <pre class="r"><code>p &lt;- plotDR(sceG, dr = &quot;TSNE&quot;, color_by = type_markers(sce))
 p$facet$params$ncol &lt;- 4; p</code></pre>
 <p><img src="figure/4-granulos.Rmd/plotDR-expression_Type-1.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="split-by-condition" class="section level2 tabset">
-<h2>…split by condition</h2>
+<div id="split-by-condition" class="section level1 tabset">
+<h1>…split by condition</h1>
 <pre class="r"><code>for (i in state_markers(sce)) {
     p &lt;- plotDR(sceG, dr = &quot;TSNE&quot;, color_by = i, facet_by = &quot;condition&quot;)
     cat(&quot;### &quot;, i, &quot;\n&quot;); print(p); cat(&quot;\n\n&quot;)
@@ -774,23 +817,22 @@ p$facet$params$ncol &lt;- 4; p</code></pre>
 <p><img src="figure/4-granulos.Rmd/plotDR-expression-condition-22.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 </div>
-<div id="cluster-granulocytes-into-3-subsets" class="section level2">
-<h2>Cluster Granulocytes into 3 subsets</h2>
+<div id="clustered_3" class="section level1">
+<h1>Clustered_3</h1>
 <pre class="r"><code>sceG &lt;- cluster(sceG, maxK = 3)</code></pre>
-</div>
-<div id="expression-heatmap-of-3-granulocyte-subsets" class="section level2">
-<h2>Expression heatmap of 3 Granulocyte subsets</h2>
+<div id="expression-heatmap-cluster_3" class="section level2">
+<h2>Expression heatmap cluster_3</h2>
 <pre class="r"><code>plotExprHeatmap(sceG, features = type_markers(sce), 
     by = &quot;cluster_id&quot;, k = &quot;meta3&quot;, row_anno = FALSE, bars = TRUE)</code></pre>
-<p><img src="figure/4-granulos.Rmd/plotExprHeatmap_5-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="figure/4-granulos.Rmd/plotExprHeatmap_3-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
-<div id="granulocyte-clusters-overlaid-on-tsne-plot" class="section level2">
-<h2>3 Granulocyte clusters overlaid on TSNE plot</h2>
+<div id="tsne-plot-cluster_3" class="section level2">
+<h2>tSNE plot + cluster_3</h2>
 <pre class="r"><code>plotDR(sceG, dr = &quot;TSNE&quot;, color_by = &quot;meta3&quot;)</code></pre>
-<p><img src="figure/4-granulos.Rmd/TSNE_meta5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/4-granulos.Rmd/TSNE_meta3-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="granulocyte-frequency-by-cluster" class="section level2">
-<h2>Granulocyte frequency by cluster</h2>
+<div id="frequency" class="section level2">
+<h2>Frequency</h2>
 <pre class="r"><code>plotFreqHeatmap(sceG, 
     k = &quot;meta3&quot;,
     hm_pal = rev(hcl.colors(10, &quot;RdBu&quot;)),
@@ -800,8 +842,11 @@ p$facet$params$ncol &lt;- 4; p</code></pre>
     bars = TRUE, perc = TRUE)</code></pre>
 <p><img src="figure/4-granulos.Rmd/Granulos_Freqheatmap_cluster-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="differential-state-analysis-for-3-granulocyte-clusters" class="section level2">
-<h2>Differential state Analysis for 3 Granulocyte clusters</h2>
+</div>
+<div id="ds-analysis" class="section level1">
+<h1>DS analysis</h1>
+<div id="differential-state-analysis" class="section level2">
+<h2>Differential State analysis</h2>
 <pre class="r"><code># create design matrix
 design &lt;- createDesignMatrix(ei(sceG), &quot;condition&quot;)
 colnames(design) &lt;- gsub(&quot;condition&quot;, &quot;&quot;, colnames(design))
@@ -830,24 +875,28 @@ for (i in colnames(design)[-1]) {
     p &lt;- plotDiffHeatmap(sub, tbl_DS, top_n = 30, all = TRUE, col_anno = &quot;condition&quot;)
     cat(&quot;## &quot;, i, &quot;\n&quot;); print(p); cat(&quot;\n\n&quot;)
 } </code></pre>
-<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
 <pre><code>##  3hours </code></pre>
-<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
 <p><img src="figure/4-granulos.Rmd/DS-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>##  6hours </code></pre>
-<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
+<pre><code>
+
+##  6hours </code></pre>
 <p><img src="figure/4-granulos.Rmd/DS-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>##  12hours </code></pre>
-<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
+<pre><code>
+
+##  12hours </code></pre>
 <p><img src="figure/4-granulos.Rmd/DS-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>##  24hours </code></pre>
-<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
+<pre><code>
+
+##  24hours </code></pre>
 <p><img src="figure/4-granulos.Rmd/DS-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>##  48hours </code></pre>
+<pre><code>
+
+##  48hours </code></pre>
 <p><img src="figure/4-granulos.Rmd/DS-5.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="differential-abundances-analysis-with-3-granulocytes-subsets" class="section level2">
-<h2>Differential Abundances analysis with 3 Granulocytes subsets</h2>
+<div id="differential-abundances-analysis" class="section level2">
+<h2>Differential Abundances analysis</h2>
+</div>
 </div>
 <div id="da-analysis" class="section level1 tabset">
 <h1>DA analysis</h1>
@@ -881,23 +930,23 @@ for (i in colnames(design)[-1]) {
 }</code></pre>
 <div id="hours" class="section level2">
 <h2>3hours</h2>
-<p><img src="figure/4-granulos.Rmd/da-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/4-granulos.Rmd/DA-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <div id="hours-1" class="section level2">
 <h2>6hours</h2>
-<p><img src="figure/4-granulos.Rmd/da-2.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/4-granulos.Rmd/DA-2.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <div id="hours-2" class="section level2">
 <h2>12hours</h2>
-<p><img src="figure/4-granulos.Rmd/da-3.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/4-granulos.Rmd/DA-3.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <div id="hours-3" class="section level2">
 <h2>24hours</h2>
-<p><img src="figure/4-granulos.Rmd/da-4.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/4-granulos.Rmd/DA-4.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <div id="hours-4" class="section level2">
 <h2>48hours</h2>
-<p><img src="figure/4-granulos.Rmd/da-5.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/4-granulos.Rmd/DA-5.png" width="768" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
