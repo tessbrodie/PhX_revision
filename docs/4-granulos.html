@@ -529,16 +529,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontreee1ee18b30bdea76eac0a88df7b7078f4b66c1b6etargetblanke1ee18ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/tessbrodie/PhX_revision/tree/e1ee18b30bdea76eac0a88df7b7078f4b66c1b6e" target="_blank">e1ee18b</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontree5aa72d89a1aa8eaace69da49117a59db86f09bf6targetblank5aa72d8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/tessbrodie/PhX_revision/tree/5aa72d89a1aa8eaace69da49117a59db86f09bf6" target="_blank">5aa72d8</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontreee1ee18b30bdea76eac0a88df7b7078f4b66c1b6etargetblanke1ee18ba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontree5aa72d89a1aa8eaace69da49117a59db86f09bf6targetblank5aa72d8a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/tessbrodie/PhX_revision/tree/e1ee18b30bdea76eac0a88df7b7078f4b66c1b6e" target="_blank">e1ee18b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/tessbrodie/PhX_revision/tree/5aa72d89a1aa8eaace69da49117a59db86f09bf6" target="_blank">5aa72d8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -553,7 +553,6 @@ Ignored files:
     Ignored:    analysis/3-differential_cache/
     Ignored:    analysis/5-KCs_cache/
     Ignored:    analysis/6-BMDM_cache/
-    Ignored:    analysis/site_libs/
     Ignored:    data/fcs/
 
 Untracked files:
@@ -563,7 +562,6 @@ Untracked files:
 Unstaged changes:
     Modified:   .gitignore
     Modified:   _workflowr.yml
-    Modified:   analysis/5-KCs.Rmd
     Modified:   analysis/_site.yml
 
 </code></pre>
@@ -603,6 +601,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/tessbrodie/PhX_revision/blob/5aa72d89a1aa8eaace69da49117a59db86f09bf6/analysis/4-granulos.Rmd" target="_blank">5aa72d8</a>
+</td>
+<td>
+Tess Brodie
+</td>
+<td>
+2020-11-04
+</td>
+<td>
+wflow_publish(“analysis/4-granulos.Rmd”, delete_cache = TRUE)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tessbrodie/PhX_revision/5bb4ee605bf09686076b62534381be6622a09ea3/docs/4-granulos.html" target="_blank">5bb4ee6</a>
+</td>
+<td>
+Tess Brodie
+</td>
+<td>
+2020-11-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -721,9 +753,8 @@ plotDR(sceG, dr = &quot;TSNE&quot;, color_by = &quot;condition&quot;)</code></pr
 <pre class="r"><code>p &lt;- plotDR(sceG, dr = &quot;TSNE&quot;, color_by = type_markers(sce))
 p$facet$params$ncol &lt;- 4; p</code></pre>
 <p><img src="figure/4-granulos.Rmd/plotDR-expression_Type-1.png" width="1152" style="display: block; margin: auto;" /></p>
-</div>
-<div id="split-by-condition" class="section level1 tabset">
-<h1>…split by condition</h1>
+<div id="split-by-condition" class="section level2 tabset">
+<h2>…split by condition</h2>
 <pre class="r"><code>for (i in state_markers(sce)) {
     p &lt;- plotDR(sceG, dr = &quot;TSNE&quot;, color_by = i, facet_by = &quot;condition&quot;)
     cat(&quot;### &quot;, i, &quot;\n&quot;); print(p); cat(&quot;\n\n&quot;)
@@ -817,6 +848,7 @@ p$facet$params$ncol &lt;- 4; p</code></pre>
 <p><img src="figure/4-granulos.Rmd/plotDR-expression-condition-22.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 </div>
+</div>
 <div id="clustered_3" class="section level1">
 <h1>Clustered_3</h1>
 <pre class="r"><code>sceG &lt;- cluster(sceG, maxK = 3)</code></pre>
@@ -875,23 +907,20 @@ for (i in colnames(design)[-1]) {
     p &lt;- plotDiffHeatmap(sub, tbl_DS, top_n = 30, all = TRUE, col_anno = &quot;condition&quot;)
     cat(&quot;## &quot;, i, &quot;\n&quot;); print(p); cat(&quot;\n\n&quot;)
 } </code></pre>
+<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
 <pre><code>##  3hours </code></pre>
+<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
 <p><img src="figure/4-granulos.Rmd/DS-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-
-##  6hours </code></pre>
+<pre><code>##  6hours </code></pre>
+<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
 <p><img src="figure/4-granulos.Rmd/DS-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-
-##  12hours </code></pre>
+<pre><code>##  12hours </code></pre>
+<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
 <p><img src="figure/4-granulos.Rmd/DS-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-
-##  24hours </code></pre>
+<pre><code>##  24hours </code></pre>
+<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
 <p><img src="figure/4-granulos.Rmd/DS-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-
-##  48hours </code></pre>
+<pre><code>##  48hours </code></pre>
 <p><img src="figure/4-granulos.Rmd/DS-5.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="differential-abundances-analysis" class="section level2">
