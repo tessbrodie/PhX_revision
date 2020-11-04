@@ -34,3 +34,6 @@ output:
     - Cell counts/heatmaps/tSNE/clustering
     - DA/DS
  
+- [Bone marrow derived macrophages](6-BMDM.html):
+    - Cell counts/heatmaps/tSNE/clustering
+    - DA/DS
