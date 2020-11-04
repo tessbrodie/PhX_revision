@@ -1,0 +1,192 @@
+---
+title: "Zoom in on Granulocytes"
+date: University of Bern, DBMR, Visceral and Transplantation Surgery lab
+author: "Tess Brodie"
+output: 
+  html_document:
+    toc_depth: 2
+---
+
+
+```{r setup, include = FALSE, dev='png'}
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+knitr::opts_chunk$set(autodep = TRUE, cache = TRUE, cache.lazy = FALSE)
+knitr::opts_chunk$set(dev = 'png')
+```
+
+## Load packages
+
+```{r load-libs, message = FALSE, warning = FALSE}
+library(CATALYST)
+library(dplyr)
+library(workflowr)
+library(flowCore)
+library(ggplot2)
+library(diffcyt)
+library(cowplot)
+library(viridis)
+library(RColorBrewer)
+```
+
+### Load data
+
+```{r load-data}
+sce <- readRDS(file.path("output", "sce.rds"))
+```
+
+### Filter on Granulocytes 
+
+```{r Filter_BMDM}
+sceG <- filterSCE(sce, k = "mm",
+               cluster_id %in% "Granulocytes")
+
+plot_grid(
+  plotDR(sce, dr= "TSNE", color_by = "mm"),
+  plotDR(sceG, dr= "TSNE", color_by = "mm"))
+```
+
+### Target expression in Granulocytes over time
+
+```{r ExprHeatmap_granulos}
+plotExprHeatmap(sceG,
+    row_anno = FALSE,   # don't annotate samples
+    row_clust = FALSE,  # keep samples in original order
+    col_clust = TRUE,  # keep markers in original order
+    bin_anno = FALSE,   # don't annotate bins
+    bars = FALSE,       # don't include sample sizes
+    scale = "last")     # aggregate, then scale
+```
+
+## Number of Granulocytes per sample
+
+```{r Granulo_count}
+plotCounts(sceG, 
+           group_by = "sample_id", 
+           color_by = "condition")
+```
+
+## TSNE of Granulocytes colored by condition
+
+```{r TSNE_condition}
+sceG <- runDR(sceG, dr = "TSNE", features = NULL)
+plotDR(sceG, dr = "TSNE", color_by = "condition")
+```
+
+## Facet by condition
+
+```{r TSNE_condition_facet}
+plotDR(sceG, dr = "TSNE", color_by = "condition", facet_by = "condition")
+```
+
+## Granulocyte Type markers TSNE facet
+
+```{r plotDR-expression_Type, fig.width = 12, fig.height = 5}
+p <- plotDR(sceG, dr = "TSNE", color_by = type_markers(sce))
+p$facet$params$ncol <- 4; p
+```
+
+## ...split by condition {.tabset}
+
+```{r plotDR-expression-condition, results = "asis", fig.width = 12, fig.height = 5}
+for (i in state_markers(sce)) {
+    p <- plotDR(sceG, dr = "TSNE", color_by = i, facet_by = "condition")
+    cat("### ", i, "\n"); print(p); cat("\n\n")
+}
+```
+
+## Cluster Granulocytes into 3 subsets
+```{r cluster_3, message = FALSE}
+sceG <- cluster(sceG, maxK = 3)
+```
+
+## Expression heatmap of 3 Granulocyte subsets
+```{r plotExprHeatmap_5, fig.width = 6, fig.height = 5}
+plotExprHeatmap(sceG, features = type_markers(sce), 
+    by = "cluster_id", k = "meta3", row_anno = FALSE, bars = TRUE)
+```
+
+## 3 Granulocyte clusters overlaid on TSNE plot
+```{r TSNE_meta5}
+plotDR(sceG, dr = "TSNE", color_by = "meta3")
+```
+
+## Granulocyte frequency by cluster
+
+```{r Granulos_Freqheatmap_cluster}
+plotFreqHeatmap(sceG, 
+    k = "meta3",
+    hm_pal = rev(hcl.colors(10, "RdBu")),
+    k_pal = hcl.colors(7, "Zissou 1"),
+    col_clust = FALSE, col_anno = FALSE,
+    row_anno = FALSE,
+    bars = TRUE, perc = TRUE)
+```
+
+## Differential state Analysis for 3 Granulocyte clusters
+```{r DS}
+# create design matrix
+design <- createDesignMatrix(ei(sceG), "condition")
+colnames(design) <- gsub("condition", "", colnames(design))
+
+# run DS analysis for control vs. each timepoint
+for (i in colnames(design)[-1]) {
+  # create contrast matrix
+  contrast <- createContrast(as.numeric(colnames(design) == i))
+    
+  # run DS analysis & extract results table
+  res_DS <- diffcyt(sceG, clustering_to_use = "meta3",
+                  analysis_type = "DS", method_DS = "diffcyt-DS-limma",
+                  design = design, contrast = contrast, verbose = FALSE)
+
+  # extract results table
+  tbl_DS <- rowData(res_DS$res)
+
+  # write table to .csv
+    fn <- file.path("output", sprintf("DS-resultsGranulos_%s.csv", i))
+    write.csv(tbl_DS, fn, row.names = FALSE)
+    
+  # subset control and timepoint of interest
+    sub <- filterSCE(sceG, condition %in% c("control", !!i))
+    
+  # plot differential heatmap
+    p <- plotDiffHeatmap(sub, tbl_DS, top_n = 30, all = TRUE, col_anno = "condition")
+    cat("## ", i, "\n"); print(p); cat("\n\n")
+} 
+```
+
+## Differential Abundances analysis with 3 Granulocytes subsets
+
+# DA analysis {.tabset}
+```{r da, results = "asis", fig.width = 8, fig.height = 6}
+# create design matrix
+design <- createDesignMatrix(ei(sceG), "condition")
+colnames(design) <- gsub("condition", "", colnames(design))
+
+# run DA analysis for control vs. each timepoint
+for (i in colnames(design)[-1]) {
+    # create contrast matrix
+    contrast <- createContrast(as.numeric(colnames(design) == i))
+    
+    # run DA analysis
+    res <- diffcyt(sceG, clustering_to_use = "meta3",
+        analysis_type = "DA", method_DA = "diffcyt-DA-edgeR",
+        design = design, contrast = contrast, verbose = FALSE)
+    
+    # extract results table
+    tbl <- rowData(res$res)
+    
+    # write table to .csv
+    fn <- file.path("output", sprintf("DA-resultsGranulos_%s.csv", i))
+    write.csv(tbl, fn, row.names = FALSE)
+    
+    # subset control and timepoint of interest
+    sub <- filterSCE(sceG, condition %in% c("control", !!i))
+    
+    # plot differential heatmap
+    p <- plotDiffHeatmap(sub, tbl, all = TRUE, col_anno = "condition")
+    cat("## ", i, "\n"); print(p); cat("\n\n")
+}
+```
+
+
+
