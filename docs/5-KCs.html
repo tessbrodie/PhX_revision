@@ -529,16 +529,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontreed2723db3efdc8e720274d299c12decf71ad05d61targetblankd2723dba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/tessbrodie/PhX_revision/tree/d2723db3efdc8e720274d299c12decf71ad05d61" target="_blank">d2723db</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontree37f923ad6ee8af529b369068d06c731233feca51targetblank37f923aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/tessbrodie/PhX_revision/tree/37f923ad6ee8af529b369068d06c731233feca51" target="_blank">37f923a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontreed2723db3efdc8e720274d299c12decf71ad05d61targetblankd2723dba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontree37f923ad6ee8af529b369068d06c731233feca51targetblank37f923aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/tessbrodie/PhX_revision/tree/d2723db3efdc8e720274d299c12decf71ad05d61" target="_blank">d2723db</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/tessbrodie/PhX_revision/tree/37f923ad6ee8af529b369068d06c731233feca51" target="_blank">37f923a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -553,6 +553,7 @@ Ignored files:
     Ignored:    analysis/3-differential_cache/
     Ignored:    analysis/4-granulos_cache/
     Ignored:    analysis/6-BMDM_cache/
+    Ignored:    analysis/site_libs/
     Ignored:    data/fcs/
 
 Untracked files:
@@ -601,6 +602,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/tessbrodie/PhX_revision/blob/37f923ad6ee8af529b369068d06c731233feca51/analysis/5-KCs.Rmd" target="_blank">37f923a</a>
+</td>
+<td>
+Tess Brodie
+</td>
+<td>
+2020-11-04
+</td>
+<td>
+wflow_publish(“analysis/5-KCs.Rmd”, delete_cache = TRUE)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/tessbrodie/PhX_revision/78ce103da7636ff06bd4ff4024d57be9f7cfa34a/docs/5-KCs.html" target="_blank">78ce103</a>
+</td>
+<td>
+Tess Brodie
+</td>
+<td>
+2020-11-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -702,9 +737,8 @@ plotDR(sceK, dr = &quot;TSNE&quot;, color_by = &quot;condition&quot;)</code></pr
 <pre class="r"><code>p &lt;- plotDR(sceK, dr = &quot;TSNE&quot;, color_by = type_markers(sce))
 p$facet$params$ncol &lt;- 4; p</code></pre>
 <p><img src="figure/5-KCs.Rmd/plotDR-expression_Type-1.png" width="1152" style="display: block; margin: auto;" /></p>
-</div>
-<div id="split-by-condition" class="section level1 tabset">
-<h1>…split by condition</h1>
+<div id="split-by-condition" class="section level2 tabset">
+<h2>…split by condition</h2>
 <pre class="r"><code>for (i in state_markers(sce)) {
     p &lt;- plotDR(sceK, dr = &quot;TSNE&quot;, color_by = i, facet_by = &quot;condition&quot;)
     cat(&quot;### &quot;, i, &quot;\n&quot;); print(p); cat(&quot;\n\n&quot;)
@@ -796,6 +830,7 @@ p$facet$params$ncol &lt;- 4; p</code></pre>
 <div id="i_a_i_e" class="section level3">
 <h3>I_A_I_E</h3>
 <p><img src="figure/5-KCs.Rmd/plotDR-expression-condition-22.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 </div>
 <div id="clustered-into-5-subsets" class="section level1">
