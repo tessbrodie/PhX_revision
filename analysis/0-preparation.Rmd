@@ -3,7 +3,7 @@ title: "Data preparation"
 date: University of Bern, DBMR, Visceral and Transplantation Surgery lab
 author: Tess Brodie
 output: 
-  workflowr::wflow_html:
+  html_document:
     toc_depth: 2
 ---
 
