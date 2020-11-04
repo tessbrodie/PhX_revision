@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Tess Brodie" />
+
+
+<title>Zoom in on BMDM</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">PhX revision</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Contents</a>
+</li>
+<li>
+  <a href="0-preparation.html">Prep data</a>
+</li>
+<li>
+  <a href="1-clustering.html">Cluster</a>
+</li>
+<li>
+  <a href="2-dimred.html">tSNE</a>
+</li>
+<li>
+  <a href="3-differential.html">DA/DS</a>
+</li>
+<li>
+  <a href="4-granulos.html">Granulos</a>
+</li>
+<li>
+  <a href="5-KCs.html">KCs</a>
+</li>
+<li>
+  <a href="6-BMDM.html">BMDM</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/tessbrodie/PhX_revision">
+    <span class="fa fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Zoom in on BMDM</h1>
+<h4 class="author">Tess Brodie</h4>
+<h4 class="date">University of Bern, DBMR, Visceral and Transplantation Surgery lab</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-11-04
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>PhX_revision/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200702code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200702)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200702code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200702)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontree64a55619ef70bea6196678273416205cbdd8e8f6targetblank64a5561a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/tessbrodie/PhX_revision/tree/64a55619ef70bea6196678273416205cbdd8e8f6" target="_blank">64a5561</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomtessbrodiePhXrevisiontree64a55619ef70bea6196678273416205cbdd8e8f6targetblank64a5561a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/tessbrodie/PhX_revision/tree/64a55619ef70bea6196678273416205cbdd8e8f6" target="_blank">64a5561</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/0-preparation_cache/
+    Ignored:    analysis/1-clustering_cache/
+    Ignored:    analysis/2-dimred_cache/
+    Ignored:    analysis/3-differential_cache/
+    Ignored:    analysis/4-granulos_cache/
+    Ignored:    analysis/5-KCs_cache/
+    Ignored:    analysis/site_libs/
+    Ignored:    data/fcs/
+
+Untracked files:
+    Untracked:  SA_plot.pdf
+
+Unstaged changes:
+    Modified:   .gitignore
+    Modified:   _workflowr.yml
+    Modified:   analysis/_site.yml
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/6-BMDM.Rmd</code>) and HTML (<code>docs/6-BMDM.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/tessbrodie/PhX_revision/blob/64a55619ef70bea6196678273416205cbdd8e8f6/analysis/6-BMDM.Rmd" target="_blank">64a5561</a>
+</td>
+<td>
+Tess Brodie
+</td>
+<td>
+2020-11-04
+</td>
+<td>
+wflow_publish(“analysis/6-BMDM.Rmd”, delete_cache = TRUE)
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="load-packages" class="section level2">
+<h2>Load packages</h2>
+<pre class="r"><code>library(CATALYST)
+library(dplyr)
+library(workflowr)
+library(flowCore)
+library(ggplot2)
+library(diffcyt)
+library(cowplot)
+library(viridis)
+library(RColorBrewer)</code></pre>
+<div id="load-data" class="section level3">
+<h3>Load data</h3>
+<pre class="r"><code>sce &lt;- readRDS(file.path(&quot;output&quot;, &quot;sce.rds&quot;))</code></pre>
+</div>
+</div>
+<div id="filter-on-bone-marrow-derived-macrophages-bmdm" class="section level1">
+<h1>Filter on bone marrow derived macrophages (BMDM)</h1>
+<pre class="r"><code>sceB &lt;- filterSCE(sce, k = &quot;mm&quot;,
+               cluster_id %in% &quot;BMDM&quot;)
+
+plot_grid(
+  plotDR(sce, dr= &quot;TSNE&quot;, color_by = &quot;mm&quot;),
+  plotDR(sceB, dr= &quot;TSNE&quot;, color_by = &quot;mm&quot;))</code></pre>
+<p><img src="figure/6-BMDM.Rmd/Filter_BMDM-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="target-expression-over-time" class="section level1">
+<h1>Target expression over time</h1>
+<pre class="r"><code>plotExprHeatmap(sceB,
+    row_anno = FALSE,   # don&#39;t annotate samples
+    row_clust = FALSE,  # keep samples in original order
+    col_clust = TRUE,  # keep markers in original order
+    bin_anno = FALSE,   # don&#39;t annotate bins
+    bars = FALSE,       # don&#39;t include sample sizes
+    scale = &quot;last&quot;)     # aggregate, then scale</code></pre>
+<p><img src="figure/6-BMDM.Rmd/ExprHeatmap_BMDM-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="number-per-sample" class="section level1">
+<h1>Number per sample</h1>
+<pre class="r"><code>plotCounts(sceB, 
+           group_by = &quot;sample_id&quot;, 
+           color_by = &quot;condition&quot;)</code></pre>
+<p><img src="figure/6-BMDM.Rmd/BMDM_count-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tsne-by-condition" class="section level1">
+<h1>tSNE by condition</h1>
+<pre class="r"><code>sceB &lt;- runDR(sceB, dr = &quot;TSNE&quot;, features = NULL, cells = 1000)
+plotDR(sceB, dr = &quot;TSNE&quot;, color_by = &quot;condition&quot;)</code></pre>
+<p><img src="figure/6-BMDM.Rmd/TSNE_condition-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="faceted" class="section level2">
+<h2>Faceted</h2>
+<pre class="r"><code>plotDR(sceB, dr = &quot;TSNE&quot;, color_by = &quot;condition&quot;, facet_by = &quot;condition&quot;)</code></pre>
+<p><img src="figure/6-BMDM.Rmd/TSNE_condition_facet-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="heatmap-type-markers" class="section level1">
+<h1>Heatmap Type markers</h1>
+<pre class="r"><code>p &lt;- plotDR(sceB, dr = &quot;TSNE&quot;, color_by = type_markers(sce))
+p$facet$params$ncol &lt;- 4; p</code></pre>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression_Type-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<div id="split-by-condition" class="section level2 tabset">
+<h2>…split by condition</h2>
+<pre class="r"><code>for (i in state_markers(sce)) {
+    p &lt;- plotDR(sceB, dr = &quot;TSNE&quot;, color_by = i, facet_by = &quot;condition&quot;)
+    cat(&quot;### &quot;, i, &quot;\n&quot;); print(p); cat(&quot;\n\n&quot;)
+}</code></pre>
+<div id="cx43" class="section level3">
+<h3>Cx43</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-1.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd115" class="section level3">
+<h3>CD115</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-2.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd64" class="section level3">
+<h3>CD64</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-3.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd274" class="section level3">
+<h3>CD274</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-4.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd40" class="section level3">
+<h3>CD40</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-5.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="inos" class="section level3">
+<h3>iNOS</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-6.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd196" class="section level3">
+<h3>CD196</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-7.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd93" class="section level3">
+<h3>CD93</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-8.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd317" class="section level3">
+<h3>CD317</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-9.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cox2" class="section level3">
+<h3>Cox2</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-10.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd1d" class="section level3">
+<h3>CD1d</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-11.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd86" class="section level3">
+<h3>CD86</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-12.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd49b_dx5" class="section level3">
+<h3>CD49b_DX5</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-13.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="pkm2" class="section level3">
+<h3>PKM2</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-14.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="arginase_1" class="section level3">
+<h3>Arginase_1</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-15.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cx3cr1" class="section level3">
+<h3>CX3CR1</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-16.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd8a" class="section level3">
+<h3>CD8a</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-17.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd161" class="section level3">
+<h3>CD161</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-18.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd80" class="section level3">
+<h3>CD80</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-19.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd4" class="section level3">
+<h3>CD4</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-20.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cd117" class="section level3">
+<h3>CD117</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-21.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="i_a_i_e" class="section level3">
+<h3>I_A_I_E</h3>
+<p><img src="figure/6-BMDM.Rmd/plotDR-expression-condition-22.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<div id="clustered-into-10-subsets" class="section level1">
+<h1>Clustered into 10 subsets</h1>
+<pre class="r"><code>sceB &lt;- cluster(sceB, maxK = 10)</code></pre>
+</div>
+<div id="expression-heatmap_10" class="section level1">
+<h1>Expression heatmap_10</h1>
+<pre class="r"><code>plotExprHeatmap(sceB, features = type_markers(sce), 
+    by = &quot;cluster_id&quot;, k = &quot;meta10&quot;, row_anno = FALSE, bars = TRUE)</code></pre>
+<p><img src="figure/6-BMDM.Rmd/plotExprHeatmap_10-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="clusters-overlaid-on-tsne_10" class="section level1">
+<h1>Clusters overlaid on TSNE_10</h1>
+<pre class="r"><code>plotDR(sceB, dr = &quot;TSNE&quot;, color_by = &quot;meta10&quot;)</code></pre>
+<p><img src="figure/6-BMDM.Rmd/TSNE_meta10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="faceted-1" class="section level2">
+<h2>Faceted</h2>
+<pre class="r"><code>plotDR(sceB, dr = &quot;TSNE&quot;, color_by = &quot;meta10&quot;, facet_by = &quot;condition&quot;)</code></pre>
+<p><img src="figure/6-BMDM.Rmd/TSNE_cluster_facet-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="frequency-by-cluster_10" class="section level1">
+<h1>Frequency by cluster_10</h1>
+<pre class="r"><code>plotFreqHeatmap(sceB, 
+    k = &quot;meta10&quot;,
+    hm_pal = rev(hcl.colors(10, &quot;RdBu&quot;)),
+    k_pal = hcl.colors(7, &quot;Zissou 1&quot;),
+    col_clust = FALSE, col_anno = FALSE,
+    row_anno = FALSE,
+    bars = TRUE, perc = TRUE)</code></pre>
+<p><img src="figure/6-BMDM.Rmd/Freqheatmap_cluster10-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="abundance-stack-plots" class="section level1">
+<h1>Abundance stack plots</h1>
+<pre class="r"><code>plotAbundances(sceB, k = &quot;meta10&quot;, by = &quot;sample_id&quot;, group_by = &quot;condition&quot;)</code></pre>
+<p><img src="figure/6-BMDM.Rmd/Abundance%20stack-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="expression-of-kc-markers-in-bmdm-subsets" class="section level1">
+<h1>Expression of KC markers in BMDM subsets</h1>
+<p>To address if some BMDM subsets may be transforming into KCs</p>
+<pre class="r"><code>plotMultiHeatmap(sceB, 
+    k = &quot;meta10&quot;, scale = &quot;never&quot;,
+    hm1 = FALSE, hm2 = c(&quot;F4_80&quot;, &quot;CD11b&quot;, &quot;CD206&quot;),
+    row_anno = FALSE, col_clust = FALSE,
+    hm2_pal = c(&quot;grey95&quot;, &quot;black&quot;))</code></pre>
+<p><img src="figure/6-BMDM.Rmd/multiheatmap_kCmarkersBMDM-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ds-analysis" class="section level1">
+<h1>DS analysis</h1>
+<div id="differential-state-significance-testing" class="section level2">
+<h2>Differential state significance testing</h2>
+<pre class="r"><code># create design matrix
+design &lt;- createDesignMatrix(ei(sceB), &quot;condition&quot;)
+colnames(design) &lt;- gsub(&quot;condition&quot;, &quot;&quot;, colnames(design))
+
+# run DS analysis for control vs. each timepoint
+for (i in colnames(design)[-1]) {
+  # create contrast matrix
+  contrast &lt;- createContrast(as.numeric(colnames(design) == i))
+    
+  # run DS analysis &amp; extract results table
+  res_DS &lt;- diffcyt(sceB, clustering_to_use = &quot;meta10&quot;,
+                  analysis_type = &quot;DS&quot;, method_DS = &quot;diffcyt-DS-limma&quot;,
+                  design = design, contrast = contrast, verbose = FALSE)
+
+  # extract results table
+  tbl_DS &lt;- rowData(res_DS$res)
+
+  # write table to .csv
+    fn &lt;- file.path(&quot;output&quot;, sprintf(&quot;DS-results_KCs_%s.csv&quot;, i))
+    write.csv(tbl_DS, fn, row.names = FALSE)
+    
+  # subset control and timepoint of interest
+    sub &lt;- filterSCE(sceB, condition %in% c(&quot;control&quot;, !!i))
+    
+  # plot differential heatmap
+    p &lt;- plotDiffHeatmap(sub, tbl_DS, top_n = 30, all = TRUE, col_anno = &quot;condition&quot;)
+    cat(&quot;## &quot;, i, &quot;\n&quot;); print(p); cat(&quot;\n\n&quot;)
+} </code></pre>
+<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
+<pre><code>##  3hours </code></pre>
+<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
+<p><img src="figure/6-BMDM.Rmd/DS-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>##  6hours </code></pre>
+<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
+<p><img src="figure/6-BMDM.Rmd/DS-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>##  12hours </code></pre>
+<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
+<p><img src="figure/6-BMDM.Rmd/DS-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>##  24hours </code></pre>
+<pre><code>Warning: Zero sample variances detected, have been offset away from zero</code></pre>
+<p><img src="figure/6-BMDM.Rmd/DS-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>##  48hours </code></pre>
+<p><img src="figure/6-BMDM.Rmd/DS-5.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="differential-abundances-significance-testing" class="section level2">
+<h2>Differential Abundances significance testing</h2>
+</div>
+</div>
+<div id="da-analysis" class="section level1 tabset">
+<h1>DA analysis</h1>
+<pre class="r"><code># create design matrix
+design &lt;- createDesignMatrix(ei(sceB), &quot;condition&quot;)
+colnames(design) &lt;- gsub(&quot;condition&quot;, &quot;&quot;, colnames(design))
+
+# run DA analysis for control vs. each timepoint
+for (i in colnames(design)[-1]) {
+    # create contrast matrix
+    contrast &lt;- createContrast(as.numeric(colnames(design) == i))
+    
+    # run DA analysis
+    res &lt;- diffcyt(sceB, clustering_to_use = &quot;meta10&quot;,
+        analysis_type = &quot;DA&quot;, method_DA = &quot;diffcyt-DA-edgeR&quot;,
+        design = design, contrast = contrast, verbose = FALSE)
+    
+    # extract results table
+    tbl &lt;- rowData(res$res)
+    
+    # write table to .csv
+    fn &lt;- file.path(&quot;output&quot;, sprintf(&quot;DA-results_KCs_%s.csv&quot;, i))
+    write.csv(tbl, fn, row.names = FALSE)
+    
+    # subset control and timepoint of interest
+    sub &lt;- filterSCE(sceB, condition %in% c(&quot;control&quot;, !!i))
+    
+    # plot differential heatmap
+    p &lt;- plotDiffHeatmap(sub, tbl, all = TRUE, col_anno = &quot;condition&quot;)
+    cat(&quot;## &quot;, i, &quot;\n&quot;); print(p); cat(&quot;\n\n&quot;)
+}</code></pre>
+<div id="hours" class="section level2">
+<h2>3hours</h2>
+<p><img src="figure/6-BMDM.Rmd/da-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="hours-1" class="section level2">
+<h2>6hours</h2>
+<p><img src="figure/6-BMDM.Rmd/da-2.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="hours-2" class="section level2">
+<h2>12hours</h2>
+<p><img src="figure/6-BMDM.Rmd/da-3.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="hours-3" class="section level2">
+<h2>24hours</h2>
+<p><img src="figure/6-BMDM.Rmd/da-4.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="hours-4" class="section level2">
+<h2>48hours</h2>
+<p><img src="figure/6-BMDM.Rmd/da-5.png" width="768" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.3 (2020-10-10)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19041)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=German_Switzerland.1252  LC_CTYPE=German_Switzerland.1252   
+[3] LC_MONETARY=German_Switzerland.1252 LC_NUMERIC=C                       
+[5] LC_TIME=German_Switzerland.1252    
+
+attached base packages:
+[1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+[8] methods   base     
+
+other attached packages:
+ [1] RColorBrewer_1.1-2          viridis_0.5.1              
+ [3] viridisLite_0.3.0           cowplot_1.1.0              
+ [5] diffcyt_1.10.0              ggplot2_3.3.2              
+ [7] flowCore_2.2.0              dplyr_1.0.2                
+ [9] CATALYST_1.14.0             SingleCellExperiment_1.12.0
+[11] SummarizedExperiment_1.20.0 Biobase_2.50.0             
+[13] GenomicRanges_1.42.0        GenomeInfoDb_1.26.0        
+[15] IRanges_2.24.0              S4Vectors_0.28.0           
+[17] BiocGenerics_0.36.0         MatrixGenerics_1.2.0       
+[19] matrixStats_0.57.0          workflowr_1.6.2            
+
+loaded via a namespace (and not attached):
+  [1] readxl_1.3.1                backports_1.2.0            
+  [3] circlize_0.4.11             drc_3.0-1                  
+  [5] plyr_1.8.6                  igraph_1.2.6               
+  [7] ConsensusClusterPlus_1.54.0 splines_4.0.3              
+  [9] BiocParallel_1.24.0         scater_1.18.0              
+ [11] TH.data_1.0-10              digest_0.6.27              
+ [13] htmltools_0.5.0             fansi_0.4.1                
+ [15] magrittr_1.5                CytoML_2.2.0               
+ [17] cluster_2.1.0               limma_3.46.0               
+ [19] aws.signature_0.6.0         openxlsx_4.2.3             
+ [21] ComplexHeatmap_2.6.0        RcppParallel_5.0.2         
+ [23] sandwich_3.0-0              flowWorkspace_4.2.0        
+ [25] cytolib_2.2.0               jpeg_0.1-8.1               
+ [27] colorspace_1.4-1            ggrepel_0.8.2              
+ [29] haven_2.3.1                 xfun_0.19                  
+ [31] crayon_1.3.4                RCurl_1.98-1.2             
+ [33] jsonlite_1.7.1              hexbin_1.28.1              
+ [35] graph_1.68.0                lme4_1.1-25                
+ [37] survival_3.2-7              zoo_1.8-8                  
+ [39] glue_1.4.2                  gtable_0.3.0               
+ [41] nnls_1.4                    zlibbioc_1.36.0            
+ [43] XVector_0.30.0              GetoptLong_1.0.4           
+ [45] DelayedArray_0.16.0         ggcyto_1.18.0              
+ [47] car_3.0-10                  BiocSingular_1.6.0         
+ [49] Rgraphviz_2.34.0            shape_1.4.5                
+ [51] abind_1.4-5                 scales_1.1.1               
+ [53] mvtnorm_1.1-1               edgeR_3.32.0               
+ [55] Rcpp_1.0.5                  plotrix_3.7-8              
+ [57] clue_0.3-57                 foreign_0.8-80             
+ [59] rsvd_1.0.3                  FlowSOM_1.22.0             
+ [61] tsne_0.1-3                  httr_1.4.2                 
+ [63] ellipsis_0.3.1              farver_2.0.3               
+ [65] pkgconfig_2.0.3             XML_3.99-0.5               
+ [67] scuttle_1.0.0               locfit_1.5-9.4             
+ [69] labeling_0.4.2              tidyselect_1.1.0           
+ [71] rlang_0.4.8                 reshape2_1.4.4             
+ [73] later_1.1.0.1               munsell_0.5.0              
+ [75] cellranger_1.1.0            tools_4.0.3                
+ [77] cli_2.1.0                   generics_0.1.0             
+ [79] ggridges_0.5.2              aws.s3_0.3.21              
+ [81] evaluate_0.14               stringr_1.4.0              
+ [83] yaml_2.2.1                  knitr_1.30                 
+ [85] fs_1.5.0                    zip_2.1.1                  
+ [87] purrr_0.3.4                 nlme_3.1-149               
+ [89] RBGL_1.66.0                 sparseMatrixStats_1.2.0    
+ [91] whisker_0.4                 xml2_1.3.2                 
+ [93] compiler_4.0.3              rstudioapi_0.11            
+ [95] beeswarm_0.2.3              curl_4.3                   
+ [97] png_0.1-7                   statmod_1.4.35             
+ [99] tibble_3.0.4                stringi_1.5.3              
+[101] forcats_0.5.0               lattice_0.20-41            
+[103] Matrix_1.2-18               nloptr_1.2.2.2             
+[105] vctrs_0.3.4                 pillar_1.4.6               
+[107] lifecycle_0.2.0             GlobalOptions_0.1.2        
+[109] BiocNeighbors_1.8.0         data.table_1.13.2          
+[111] bitops_1.0-6                irlba_2.3.3                
+[113] httpuv_1.5.4                R6_2.5.0                   
+[115] latticeExtra_0.6-29         promises_1.1.1             
+[117] gridExtra_2.3               RProtoBufLib_2.2.0         
+[119] rio_0.5.16                  vipor_0.4.5                
+[121] codetools_0.2-16            assertthat_0.2.1           
+[123] boot_1.3-25                 MASS_7.3-53                
+[125] gtools_3.8.2                rprojroot_1.3-2            
+[127] rjson_0.2.20                withr_2.3.0                
+[129] multcomp_1.4-14             GenomeInfoDbData_1.2.4     
+[131] hms_0.5.3                   ncdfFlow_2.36.0            
+[133] grid_4.0.3                  beachmat_2.6.0             
+[135] tidyr_1.1.2                 minqa_1.2.4                
+[137] rmarkdown_2.5               DelayedMatrixStats_1.12.0  
+[139] carData_3.0-4               Cairo_1.5-12.2             
+[141] Rtsne_0.15                  git2r_0.27.1               
+[143] base64enc_0.1-3             ggbeeswarm_0.6.0           </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
