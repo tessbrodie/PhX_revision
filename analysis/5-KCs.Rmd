@@ -135,13 +135,6 @@ plotFreqHeatmap(sceK,
 plotAbundances(sceK, k = "meta5", by = "sample_id", group_by = "condition")
 ```
 
-
-plotMultiHeatmap(sce, 
-    k = "meta8", scale = "never",
-    hm1 = FALSE, hm2 = c("pS6", "pp38", "pBtk"),
-    row_anno = FALSE, col_clust = FALSE,
-    hm2_pal = c("grey95", "black"))
-
 # Expression of KC markers
 
 ```{r multiheatmap_kCmarkers}
