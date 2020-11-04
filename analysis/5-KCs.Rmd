@@ -1,11 +1,12 @@
 ---
-title: "Zoom in on Granulocytes"
+title: "Zoom in on Kupffer cells"
 date: University of Bern, DBMR, Visceral and Transplantation Surgery lab
-author: "Tess Brodie"
+author: Tess Brodie
 output: 
   html_document:
     toc_depth: 2
 ---
+
 
 
 ```{r setup, include = FALSE, dev='png'}
@@ -34,21 +35,21 @@ library(RColorBrewer)
 sce <- readRDS(file.path("output", "sce.rds"))
 ```
 
-# Filter on Granulocytes 
+# Filter on Kupffer cells
 
-```{r Filter_Granulos}
-sceG <- filterSCE(sce, k = "mm",
-               cluster_id %in% "Granulocytes")
+```{r Filter_KCs}
+sceK <- filterSCE(sce, k = "mm",
+               cluster_id %in% "KCs")
 
 plot_grid(
   plotDR(sce, dr= "TSNE", color_by = "mm"),
-  plotDR(sceG, dr= "TSNE", color_by = "mm"))
+  plotDR(sceK, dr= "TSNE", color_by = "mm"))
 ```
 
 # Target expression over time
 
-```{r ExprHeatmap_granulos}
-plotExprHeatmap(sceG,
+```{r ExprHeatmap_KCs}
+plotExprHeatmap(sceK,
     row_anno = FALSE,   # don't annotate samples
     row_clust = FALSE,  # keep samples in original order
     col_clust = TRUE,  # keep markers in original order
@@ -57,10 +58,10 @@ plotExprHeatmap(sceG,
     scale = "last")     # aggregate, then scale
 ```
 
-# Cells per sample
+# Number per sample
 
-```{r Granulo_count}
-plotCounts(sceG, 
+```{r KCs_count}
+plotCounts(sceK, 
            group_by = "sample_id", 
            color_by = "condition")
 ```
@@ -68,20 +69,20 @@ plotCounts(sceG,
 # tSNE by condition
 
 ```{r TSNE_condition}
-sceG <- runDR(sceG, dr = "TSNE", features = NULL)
-plotDR(sceG, dr = "TSNE", color_by = "condition")
+sceK <- runDR(sceK, dr = "TSNE", features = NULL, cells = 1000)
+plotDR(sceK, dr = "TSNE", color_by = "condition")
 ```
 
 ## Faceted
 
 ```{r TSNE_condition_facet}
-plotDR(sceG, dr = "TSNE", color_by = "condition", facet_by = "condition")
+plotDR(sceK, dr = "TSNE", color_by = "condition", facet_by = "condition")
 ```
 
-# Heatmap of Type markers
+# Heatmap Type markers
 
 ```{r plotDR-expression_Type, fig.width = 12, fig.height = 5}
-p <- plotDR(sceG, dr = "TSNE", color_by = type_markers(sce))
+p <- plotDR(sceK, dr = "TSNE", color_by = type_markers(sce))
 p$facet$params$ncol <- 4; p
 ```
 
@@ -89,32 +90,38 @@ p$facet$params$ncol <- 4; p
 
 ```{r plotDR-expression-condition, results = "asis", fig.width = 12, fig.height = 5}
 for (i in state_markers(sce)) {
-    p <- plotDR(sceG, dr = "TSNE", color_by = i, facet_by = "condition")
+    p <- plotDR(sceK, dr = "TSNE", color_by = i, facet_by = "condition")
     cat("### ", i, "\n"); print(p); cat("\n\n")
 }
 ```
 
-# Clustered_3
-```{r cluster_3, message = FALSE}
-sceG <- cluster(sceG, maxK = 3)
+# Clustered into 5 subsets
+```{r cluster_5, message = FALSE}
+sceK <- cluster(sceK, maxK = 5)
 ```
 
-## Expression heatmap cluster_3
-```{r plotExprHeatmap_3, fig.width = 6, fig.height = 5}
-plotExprHeatmap(sceG, features = type_markers(sce), 
-    by = "cluster_id", k = "meta3", row_anno = FALSE, bars = TRUE)
+# Expression heatmap_5
+```{r plotExprHeatmap_5, fig.width = 6, fig.height = 5}
+plotExprHeatmap(sceK, features = type_markers(sce), 
+    by = "cluster_id", k = "meta5", row_anno = FALSE, bars = TRUE)
 ```
 
-## tSNE plot + cluster_3
-```{r TSNE_meta3}
-plotDR(sceG, dr = "TSNE", color_by = "meta3")
+# Clusters overlaid on TSNE_5
+```{r TSNE_meta5}
+plotDR(sceK, dr = "TSNE", color_by = "meta5")
 ```
 
-## Frequency
+## Faceted
 
-```{r Granulos_Freqheatmap_cluster}
-plotFreqHeatmap(sceG, 
-    k = "meta3",
+```{r TSNE_cluster_facet}
+plotDR(sceK, dr = "TSNE", color_by = "meta5", facet_by = "condition")
+```
+
+# Frequency by cluster_5
+
+```{r KC_Freqheatmap_cluster5}
+plotFreqHeatmap(sceK, 
+    k = "meta5",
     hm_pal = rev(hcl.colors(10, "RdBu")),
     k_pal = hcl.colors(7, "Zissou 1"),
     col_clust = FALSE, col_anno = FALSE,
@@ -122,11 +129,35 @@ plotFreqHeatmap(sceG,
     bars = TRUE, perc = TRUE)
 ```
 
+# Abundance stack plots
+
+```{r Abundance stack}
+plotAbundances(sceK, k = "meta5", by = "sample_id", group_by = "condition")
+```
+
+
+plotMultiHeatmap(sce, 
+    k = "meta8", scale = "never",
+    hm1 = FALSE, hm2 = c("pS6", "pp38", "pBtk"),
+    row_anno = FALSE, col_clust = FALSE,
+    hm2_pal = c("grey95", "black"))
+
+# Expression of KC markers
+
+```{r multiheatmap_kCmarkers}
+plotMultiHeatmap(sceK, 
+    k = "meta5", scale = "never",
+    hm1 = FALSE, hm2 = c("F4_80", "CD11b", "CD206"),
+    row_anno = FALSE, col_clust = FALSE,
+    hm2_pal = c("grey95", "black"))
+```
+
+
 # DS analysis
-## Differential State analysis 
+## Differential state significance testing
 ```{r DS}
 # create design matrix
-design <- createDesignMatrix(ei(sceG), "condition")
+design <- createDesignMatrix(ei(sceK), "condition")
 colnames(design) <- gsub("condition", "", colnames(design))
 
 # run DS analysis for control vs. each timepoint
@@ -135,7 +166,7 @@ for (i in colnames(design)[-1]) {
   contrast <- createContrast(as.numeric(colnames(design) == i))
     
   # run DS analysis & extract results table
-  res_DS <- diffcyt(sceG, clustering_to_use = "meta3",
+  res_DS <- diffcyt(sceK, clustering_to_use = "meta5",
                   analysis_type = "DS", method_DS = "diffcyt-DS-limma",
                   design = design, contrast = contrast, verbose = FALSE)
 
@@ -143,11 +174,11 @@ for (i in colnames(design)[-1]) {
   tbl_DS <- rowData(res_DS$res)
 
   # write table to .csv
-    fn <- file.path("output", sprintf("DS-resultsGranulos_%s.csv", i))
+    fn <- file.path("output", sprintf("DS-results_KCs_%s.csv", i))
     write.csv(tbl_DS, fn, row.names = FALSE)
     
   # subset control and timepoint of interest
-    sub <- filterSCE(sceG, condition %in% c("control", !!i))
+    sub <- filterSCE(sceK, condition %in% c("control", !!i))
     
   # plot differential heatmap
     p <- plotDiffHeatmap(sub, tbl_DS, top_n = 30, all = TRUE, col_anno = "condition")
@@ -155,12 +186,12 @@ for (i in colnames(design)[-1]) {
 } 
 ```
 
-## Differential Abundances analysis
+## Differential Abundances significance testing
 
 # DA analysis {.tabset}
-```{r DA, results = "asis", fig.width = 8, fig.height = 6}
+```{r da, results = "asis", fig.width = 8, fig.height = 6}
 # create design matrix
-design <- createDesignMatrix(ei(sceG), "condition")
+design <- createDesignMatrix(ei(sceK), "condition")
 colnames(design) <- gsub("condition", "", colnames(design))
 
 # run DA analysis for control vs. each timepoint
@@ -169,7 +200,7 @@ for (i in colnames(design)[-1]) {
     contrast <- createContrast(as.numeric(colnames(design) == i))
     
     # run DA analysis
-    res <- diffcyt(sceG, clustering_to_use = "meta3",
+    res <- diffcyt(sceK, clustering_to_use = "meta5",
         analysis_type = "DA", method_DA = "diffcyt-DA-edgeR",
         design = design, contrast = contrast, verbose = FALSE)
     
@@ -177,11 +208,11 @@ for (i in colnames(design)[-1]) {
     tbl <- rowData(res$res)
     
     # write table to .csv
-    fn <- file.path("output", sprintf("DA-resultsGranulos_%s.csv", i))
+    fn <- file.path("output", sprintf("DA-results_KCs_%s.csv", i))
     write.csv(tbl, fn, row.names = FALSE)
     
     # subset control and timepoint of interest
-    sub <- filterSCE(sceG, condition %in% c("control", !!i))
+    sub <- filterSCE(sceK, condition %in% c("control", !!i))
     
     # plot differential heatmap
     p <- plotDiffHeatmap(sub, tbl, all = TRUE, col_anno = "condition")

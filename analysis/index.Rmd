@@ -25,3 +25,12 @@ output:
 - [Differential analysis](3-differential.html):
     - Differential Abundance analysis with main liver populations
     - Differential State analysis with main liver populations
+    
+- [Granulocytes](4-granulos.html):
+    - Cell counts/heatmaps/tSNE/clustering
+    - DA/DS
+    
+- [Kupffer cells](5-KCs.html):
+    - Cell counts/heatmaps/tSNE/clustering
+    - DA/DS
+ 
