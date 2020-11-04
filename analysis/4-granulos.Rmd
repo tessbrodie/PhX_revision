@@ -85,7 +85,7 @@ p <- plotDR(sceG, dr = "TSNE", color_by = type_markers(sce))
 p$facet$params$ncol <- 4; p
 ```
 
-# ...split by condition {.tabset}
+## ...split by condition {.tabset}
 
 ```{r plotDR-expression-condition, results = "asis", fig.width = 12, fig.height = 5}
 for (i in state_markers(sce)) {
@@ -93,6 +93,7 @@ for (i in state_markers(sce)) {
     cat("### ", i, "\n"); print(p); cat("\n\n")
 }
 ```
+
 
 # Clustered_3
 ```{r cluster_3, message = FALSE}
